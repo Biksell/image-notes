@@ -13,7 +13,7 @@ img_width = 500
 img_height = 500
 
 hotkey_forward = "w"
-hotkey_backward = "a"
+hotkey_backward = "s"
 
 running = True
 
