@@ -12,8 +12,8 @@ img = None
 img_width = 500
 img_height = 500
 
-hotkey_forward = "pg up"
-hotkey_backward = "pg dn"
+hotkey_forward = "w"
+hotkey_backward = "a"
 
 running = True
 
@@ -59,7 +59,7 @@ def update():
     while running:
         event = keyboard.read_event()
         if event.event_type == keyboard.KEY_DOWN:
-            if event.name == hotkey_forward:
+            if event.name.lower() == hotkey_forward:
                 index += 1
                 update_canvas()
             elif event.name == hotkey_backward:
