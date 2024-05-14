@@ -19,6 +19,8 @@ running = True
 
 index = 0
 
+offset = 40
+
 def choose_files():
     global img, canvas, images
     images = tkinter.filedialog.askopenfilenames()
@@ -40,7 +42,7 @@ def update_canvas():
     img_width = img.width()
     img_height = img.height()
     canvas.itemconfig(img_ref, image=img)
-    root.geometry(f"{img_width}x{img_height + 20}")
+    root.geometry(f"{img_width}x{img_height + offset}")
     lblFile.config(text=f"Current file: {basename(images[index])}")
     return
 '''
@@ -68,7 +70,7 @@ def update():
 def handleClosing():
     global running
     running = False
-    system("taskkill /f /im image_notes.exe")
+    system("taskkill /f /im image-notes.exe")
     root.destroy()
     sys.exit()
     return
@@ -78,7 +80,7 @@ threading.Thread(target=update).start()
 # Tkinter init
 root = Tk()
 root.configure(bg="#000000")
-root.title("Image Notes v0.1")
+root.title("Image Notes v1.0")
 
 topFrame = Frame(root, pady=10, bg="#000000")
 topFrame.pack(side=TOP)
@@ -88,7 +90,7 @@ btnFilePicker = Button(topFrame, text="Choose Files...", command=lambda: threadi
 btnFilePicker.pack(side=LEFT)
 
 # Hotkey
-lblKey = Label(topFrame, text=f"Hotkeys: {hotkey_forward}, {hotkey_backward}", padx=2, pady=2, bg="#10141a", fg="white", font='Arial 10 bold')
+lblKey = Label(topFrame, text=f"Hotkeys: {hotkey_forward}, {hotkey_backward}", padx=2, pady=2, bg="#000000", fg="white", font='Arial 10 bold')
 lblKey.pack(side=LEFT)
 
 # Canvas
@@ -97,8 +99,9 @@ botFrame.pack()
 canvas = Canvas(root, width=img_width, height=img_height)
 img = ImageTk.PhotoImage(file="default.png")
 img_ref = canvas.create_image(0, 0, image=img, anchor=NW)
-root.geometry(f"{img.width()}x{img.height() + 20}")
+root.geometry(f"{img.width()}x{img.height() + offset}")
 canvas.pack(fill=BOTH, expand=True, side=BOTTOM)
 
 root.protocol("WM_DELETE_WINDOW", handleClosing)
+root.wm_attributes("-topmost", True)
 root.mainloop()
